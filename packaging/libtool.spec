@@ -10,6 +10,7 @@ Summary:        The GNU Portable Library Tool
 Url:            http://www.gnu.org/software/libtool/
 Group:          Development/Tools
 Source:         http://ftp.gnu.org/gnu/libtool/libtool-%{version}.tar.gz
+Source1001: packaging/libtool.manifest 
 Patch0:         no-host-name.patch
 Patch1:		fix-AC_LANG_PROGRAM.patch
 
@@ -67,6 +68,7 @@ Static libraries and header files for development with ltdl.
 %patch1 -p1
 
 %build
+cp %{SOURCE1001} .
 
 ./bootstrap
 
@@ -97,6 +99,7 @@ rm -rf %{buildroot}
 %postun ltdl -p /sbin/ldconfig
 
 %files
+%manifest libtool.manifest
 %defattr(-,root,root)
 %doc AUTHORS COPYING  THANKS 
 %{_bindir}/libtool
@@ -106,11 +109,13 @@ rm -rf %{buildroot}
 %{_datadir}/libtool
 
 %files ltdl
+%manifest libtool.manifest
 %defattr(-,root,root)
 %doc libltdl/COPYING.LIB libltdl/README
 %{_libdir}/libltdl.so.*
 
 %files ltdl-devel
+%manifest libtool.manifest
 %defattr(-,root,root)
 %{_datadir}/libtool/libltdl
 %{_libdir}/libltdl.so
