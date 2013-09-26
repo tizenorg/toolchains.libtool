@@ -86,6 +86,9 @@ make
 %install
 %make_install
 rm -rf %{buildroot}%{_infodir}
+# Tizen SDK license
+mkdir -p %{buildroot}/usr/share/license
+cp COPYING %{buildroot}/usr/share/license/%{name}
 
 %check
 #make check VERBOSE=yes > make_check.log 2>&1 || (cat make_check.log && false)
@@ -107,6 +110,7 @@ rm -rf %{buildroot}
 %{_datadir}/aclocal/*.m4
 %exclude %{_datadir}/libtool/libltdl
 %{_datadir}/libtool
+/usr/share/license/%{name}
 
 %files ltdl
 %manifest libtool.manifest
