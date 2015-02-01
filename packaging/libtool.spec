@@ -82,6 +82,7 @@ sed -e 's/pkgdatadir="\\${datadir}\/\$PACKAGE"/pkgdatadir="\\${datadir}\/\${PACK
 # build not smp safe:
 make 
 
+
 %install
 %make_install
 rm -rf %{buildroot}%{_infodir}
