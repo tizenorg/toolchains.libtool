@@ -10,9 +10,9 @@ Summary:        The GNU Portable Library Tool
 Url:            http://www.gnu.org/software/libtool/
 Group:          Development/Tools
 Source:         http://ftp.gnu.org/gnu/libtool/libtool-%{version}.tar.gz
-Source1001: packaging/libtool.manifest 
 Patch0:         no-host-name.patch
 Patch1:		fix-AC_LANG_PROGRAM.patch
+Patch2:		as-needed.patch
 
 BuildRequires:  autoconf >= 2.59
 BuildRequires:  automake >= 1.9.2
@@ -66,9 +66,9 @@ Static libraries and header files for development with ltdl.
 %setup -n libtool-%{version} -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
-cp %{SOURCE1001} .
 
 ./bootstrap
 
@@ -87,6 +87,10 @@ make
 %make_install
 rm -rf %{buildroot}%{_infodir}
 
+mkdir -p %{buildroot}/usr/share/license
+cp COPYING %{buildroot}/usr/share/license/%{name}
+cp COPYING %{buildroot}/usr/share/license/%{name}-ltdl
+
 %check
 #make check VERBOSE=yes > make_check.log 2>&1 || (cat make_check.log && false)
 
@@ -99,7 +103,6 @@ rm -rf %{buildroot}
 %postun ltdl -p /sbin/ldconfig
 
 %files
-%manifest libtool.manifest
 %defattr(-,root,root)
 %doc AUTHORS COPYING  THANKS 
 %{_bindir}/libtool
@@ -107,20 +110,17 @@ rm -rf %{buildroot}
 %{_datadir}/aclocal/*.m4
 %exclude %{_datadir}/libtool/libltdl
 %{_datadir}/libtool
+/usr/share/license/%{name}
 
 %files ltdl
-%manifest libtool.manifest
 %defattr(-,root,root)
 %doc libltdl/COPYING.LIB libltdl/README
 %{_libdir}/libltdl.so.*
+/usr/share/license/%{name}-ltdl
 
 %files ltdl-devel
-%manifest libtool.manifest
 %defattr(-,root,root)
 %{_datadir}/libtool/libltdl
 %{_libdir}/libltdl.so
 %{_includedir}/ltdl.h
 %{_includedir}/libltdl
-
-
-

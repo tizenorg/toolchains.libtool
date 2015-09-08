@@ -2844,6 +2844,10 @@ if test "$GCC" = yes; then
       while $ECHO "$ac_prog" | $GREP "$re_direlt" > /dev/null 2>&1; do
 	ac_prog=`$ECHO $ac_prog| $SED "s%$re_direlt%/%"`
       done
+      case $ac_prog in
+      *coverity_config*)
+        ac_prog=`$ECHO $ac_prog | cut -d ' ' -f1` ;;
+      esac
       test -z "$LD" && LD="$ac_prog"
       ;;
   "")
